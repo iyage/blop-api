@@ -2,9 +2,26 @@ service: nodejs-aws-lambda
 provider:
   name: aws
   runtime: nodejs18.x
+package:
+  exclude:
+    - databaseModel/**
+    - doc/**
+    - package.json
+    - package-lock.json
+    - custom_yml_files/**
+    - custom_models/**
+    - node_modules/
 functions:
   app:
     handler: dist/index.handler
     events:
-      - http: ANY /
+      - http:
+          path: /api/v1/register_new_user
+          method: post
+          cors: true
+      - http:
+          path: /api/v1/authenticate
+          method: post
+          cors: true
+
       - http: ANY /{proxy+}
