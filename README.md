@@ -2,7 +2,7 @@
 
 ## About The Project
 
-This is a basic blog api to demostrate crud operation, built with nodejs and typescript
+This is a basic blog api that demostrate crud operation, built with nodejs and typescript
 
 ### Technology used
 
@@ -18,7 +18,7 @@ This is a basic blog api to demostrate crud operation, built with nodejs and typ
 
 ## Getting Started
 
-please follow the following to build and run the program
+please follow this steps to build and run the program
 
 ### Prerequisites
 
@@ -49,12 +49,14 @@ typescript
 
 1. Run the command
 
-   ```npx nodemon
+   ```sh
+    npx nodemon
 
    ```
 
 2. build
 
-   ```npm run build
+   ```sh
+   npm run build
 
    ```
