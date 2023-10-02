@@ -3,11 +3,13 @@ import publicRouter from "./routes/publicRoute";
 import serverless from "serverless-http";
 import verifyJwt from "./middleware/verifyJwt";
 import privateRouter from "./routes/privateRoutes";
+import cors from "cors";
+import corsOptions from "./config/corsOptions";
 require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-
+app.use(cors(corsOptions));
 app.use("/", publicRouter);
 app.use(verifyJwt);
 app.use("/", privateRouter);
