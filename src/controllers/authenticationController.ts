@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { Response, Request } from "express";
-import { response, user } from "utils/interfaces/interfaces";
+import { response, user } from "../utils/interfaces/interfaces";
 import myConn from "../utils/dbconnection";
 import { Connection } from "promise-mysql";
 import getUserByemail from "../utils/fetchUserByemail";
@@ -63,6 +63,8 @@ async function authenticate(req: Request, res: Response) {
     const filteredUser = {
       id: fetchedUser[0].id,
       email: fetchedUser[0].email,
+      firstName: fetchedUser[0].firstName,
+      lastName: fetchedUser[0].lastName,
     };
     const accessToken = jwt.sign(
       { userInfo: filteredUser },
