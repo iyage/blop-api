@@ -4,6 +4,7 @@
     "moduleResolution": "NodeNext",
     "baseUrl": "src",
     "outDir": "dist",
+    "allowJs": true,
     "sourceMap": true,
     "noImplicitAny": true
   },
