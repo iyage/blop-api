@@ -1,12 +1,11 @@
 import express, { Request, Response } from "express";
+import publicRouter from "./routes/publicRoute";
 import serverless from "serverless-http";
-
+require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-app.use("/index", (req: Request, res: Response) => {
-  res.send("working");
-});
+app.use("/", publicRouter);
 app.use(
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.status(404).send();
@@ -23,9 +22,11 @@ app.use(
     res.status(err.status || 500).send();
   }
 );
-if (process.env.ENVIRONMENT === "production") {
+if (process.env.NODE_ENV !== "dev") {
+  console.log(process.env.NODE_ENV);
   exports.handler = serverless(app);
 } else {
+  console.log(process.env.NODE_ENV);
   app.listen(3000, () => {
     console.log(`Server is listening on port ${3000}.`);
   });
