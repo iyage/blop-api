@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 import { Response, Request, NextFunction, Express } from "express";
-import { response } from "utils/interfaces/interfaces";
+import { response, user } from "utils/interfaces/interfaces";
 
 declare global {
   namespace Express {
     interface Request {
-      user: object;
+      user: user;
     }
   }
 }
@@ -33,4 +33,4 @@ const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-module.exports = verifyJwt;
+export default verifyJwt;

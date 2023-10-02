@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { response } from "utils/interfaces/interfaces";
+import { response, user } from "../utils/interfaces/interfaces";
 import myConn from "../utils/dbconnection";
-import { error } from "console";
+import getUserByemail from "../utils/fetchUserByemail";
 async function registerNewUser(req: Request, res: Response) {
   //validatePayLoad
   const apiResponse: response = {
@@ -43,6 +43,22 @@ async function registerNewUser(req: Request, res: Response) {
   try {
     const con = new myConn();
     masterConnection = await con.mysqlConnection();
+
+    const fetchedUser: user[] | undefined = await getUserByemail(
+      masterConnection,
+      payload.email
+    );
+    if (fetchedUser == undefined) {
+      apiResponse.message = "Unknow Error has occur";
+      apiResponse.status = 500;
+      return res.status(500).send(apiResponse);
+    }
+    if (fetchedUser.length > 0) {
+      apiResponse.message = `User with email ${payload.email} already exist`;
+      apiResponse.status = 400;
+      return res.status(400).send(apiResponse);
+    }
+
     const salt = bcrypt.genSaltSync(10);
     let hashPassword: string = bcrypt.hashSync(payload.password, salt);
     const query =
